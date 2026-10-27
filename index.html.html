@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Botánica | Florería Cute & Detallista</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#FFF5F6',
+                            100: '#FFE4E8',
+                            200: '#FECDDB',
+                            400: '#FF7395',
+                            500: '#FF4D79', // Pink Cute Principal
+                            600: '#E6305C',
+                            800: '#7A1C38', // Vino / Guinda Títulos
+                            900: '#4A0D1F',
+                            text: '#996B77' // Marrón / Rosado Suave
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        '4xl': '2.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main, #FFF5F6);
+            color: var(--text-color, #4A0D1F);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom Themes */
+        .theme-cute {
+            --bg-main: #FFF5F6;
+            --brand-primary: #FF4D79;
+            --brand-title: #7A1C38;
+            --brand-sub: #996B77;
+        }
+        .theme-botanical {
+            --bg-main: #F4F7F4;
+            --brand-primary: #4A7C59;
+            --brand-title: #1C3A27;
+            --brand-sub: #5F7A68;
+        }
+        .theme-lavender {
+            --bg-main: #F7F5FB;
+            --brand-primary: #8B5CF6;
+            --brand-title: #3B1F70;
+            --brand-sub: #6E5F8B;
+        }
+        .theme-peach {
+            --bg-main: #FFF8F4;
+            --brand-primary: #FF6B4A;
+            --brand-title: #6E220F;
+            --brand-sub: #9E6B5E;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="theme-cute antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-rose-100/60 transition-all shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-full bg-rose-100 flex items-center justify-center text-rose-500 group-hover:scale-105 transition-transform shadow-inner">
+                    <i class="fa-solid fa-spa text-xl"></i>
+                </div>
+                <div>
+                    <span class="block font-playfair font-extrabold text-xl text-brand-800 tracking-tight leading-none" id="logoText">Aura Botánica</span>
+                    <span class="text-[10px] font-bold tracking-widest text-brand-400 uppercase leading-tight" id="sublogoText">Florería Cute & Detallista</span>
+                </div>
+            </a>
+
+            <!-- Menu Links (Desktop) -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-brand-text">
+                <a href="#catalogo" class="hover:text-brand-500 transition-colors">Catálogo</a>
+                <a href="#nosotros" class="hover:text-brand-500 transition-colors">Nosotros</a>
+                <a href="#contacto" class="hover:text-brand-500 transition-colors">Contacto</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-3">
+                <!-- Modo Editor CMS Button -->
+                <button onclick="toggleCMSModal()" class="flex items-center gap-2 bg-rose-50 border border-rose-200 text-brand-800 px-4 py-2 rounded-full font-semibold text-xs sm:text-sm hover:bg-rose-100 transition-all shadow-sm">
+                    <i class="fa-solid fa-pen-to-square text-rose-500"></i>
+                    <span>Modo Editor / CMS</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCartModal()" class="relative bg-brand-500 hover:bg-brand-600 text-white w-11 h-11 rounded-full flex items-center justify-center transition-all shadow-md hover:shadow-rose-300">
+                    <i class="fa-solid fa-bag-shopping text-base"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-white text-brand-500 border-2 border-brand-500 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO SECTION (Identical to reference photo) -->
+        <section class="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100/80 text-brand-500 font-semibold text-xs sm:text-sm border border-rose-200/50 shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Diseños Florales Exclusivos</span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h1 class="font-playfair font-extrabold text-4xl sm:text-5xl lg:text-6xl text-brand-800 leading-[1.15]">
+                        Regala sonrisas con flores frescas y llenas de magia <span class="inline-block text-brand-500 animate-pulse">💕</span>
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-brand-text text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Creamos arreglos únicos, ramos personalizados y detalles inolvidables para hacer de cada momento una fecha especial.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#catalogo" class="w-full sm:w-auto bg-brand-500 hover:bg-brand-600 text-white font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-rose-300 transition-all flex items-center justify-center gap-2 group">
+                            <span>Ver Catálogo</span>
+                            <i class="fa-solid fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <button onclick="openCustomOrderWhatsApp()" class="w-full sm:w-auto bg-white hover:bg-rose-50 text-brand-800 border-2 border-rose-200 font-bold px-8 py-4 rounded-full shadow-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-500 text-lg"></i>
+                            <span>Pedido Personalizado</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Photo Container (Border radius 35px) -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md lg:max-w-none">
+                        <!-- Decorative glow element -->
+                        <div class="absolute -inset-2 bg-gradient-to-r from-rose-200 to-pink-300 rounded-[40px] blur-xl opacity-60"></div>
+                        
+                        <!-- Main Frame -->
+                        <div class="relative overflow-hidden rounded-[35px] border-4 border-white shadow-2xl bg-white aspect-[4/5]">
+                            <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=1000&q=80" 
+                                 alt="Ramo de Flores Frescas Aura Botánica" 
+                                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CATALOG SECTION -->
+        <section id="catalogo" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-brand-500 font-bold text-sm uppercase tracking-widest">Nuestra Colección</span>
+                <h2 class="font-playfair text-3xl sm:text-4xl font-bold text-brand-800 mt-1">Nuestros Arreglos más Vendidos</h2>
+                <div class="w-16 h-1 bg-brand-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-2 mb-10" id="categoryFilters">
+                <!-- Dynamic Filter Buttons -->
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productGrid">
+                <!-- Products injected via JS -->
+            </div>
+        </section>
+
+        <!-- NOSOTROS / ABOUT SECTION -->
+        <section id="nosotros" class="py-16 bg-white/60 border-y border-rose-100/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="p-6 bg-white rounded-3xl shadow-sm border border-rose-100 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-100 text-brand-500 flex items-center justify-center text-2xl mb-4">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                        <h3 class="font-playfair font-bold text-xl text-brand-800 mb-2">Diseños con Amor</h3>
+                        <p class="text-brand-text text-sm">Cada ramo es elaborado minuciosamente a mano combinando armonía de colores y flores frescas.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-3xl shadow-sm border border-rose-100 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-100 text-brand-500 flex items-center justify-center text-2xl mb-4">
+                            <i class="fa-solid fa-truck-fast"></i>
+                        </div>
+                        <h3 class="font-playfair font-bold text-xl text-brand-800 mb-2">Envíos Exprés</h3>
+                        <p class="text-brand-text text-sm">Llegamos a tiempo para sorprender a esa persona especial donde sea que se encuentre.</p>
+                    </div>
+
+                    <div class="p-6 bg-white rounded-3xl shadow-sm border border-rose-100 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-100 text-brand-500 flex items-center justify-center text-2xl mb-4">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <h3 class="font-playfair font-bold text-xl text-brand-800 mb-2">Calidad Garantizada</h3>
+                        <p class="text-brand-text text-sm">Seleccionamos las flores más hermosas del día para garantizar máxima duración y aroma.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contacto" class="bg-brand-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <h3 class="font-playfair text-2xl font-bold">Aura Botánica</h3>
+                    <p class="text-rose-200 text-sm mt-1">Florería Cute & Detallista • Haciendo momentos inolvidables</p>
+                </div>
+                <div class="flex items-center gap-4 text-xl">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-500 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-500 transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-500 transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-rose-900/60 mt-8 pt-6 text-center text-xs text-rose-300">
+                &copy; 2026 Aura Botánica. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART MODAL (OFFCANVAS SLIDE) -->
+    <div id="cartModal" class="fixed inset-0 z-50 hidden">
+        <!-- Backdrop -->
+        <div onclick="toggleCartModal()" class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"></div>
+        
+        <!-- Panel -->
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                <!-- Cart Header -->
+                <div class="p-6 bg-rose-50 border-b border-rose-100 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bag-shopping text-brand-500 text-xl"></i>
+                        <h3 class="font-playfair font-bold text-xl text-brand-800">Tu Carrito de Compras</h3>
+                    </div>
+                    <button onclick="toggleCartModal()" class="text-gray-400 hover:text-gray-600 p-2">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cartItemList" class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Items rendered via JS -->
+                </div>
+
+                <!-- Cart Footer -->
+                <div class="p-6 border-t border-gray-100 bg-gray-50/50 space-y-4">
+                    <div class="flex justify-between items-center text-lg font-bold text-brand-800">
+                        <span>Total estimado:</span>
+                        <span id="cartTotalAmount">S/ 0.00</span>
+                    </div>
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 rounded-full shadow-lg shadow-emerald-200 transition-all flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                        <span>Confirmar Pedido por WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CMS / EDITOR MODAL -->
+    <div id="cmsModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div onclick="toggleCMSModal()" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+
+        <!-- CMS Content -->
+        <div class="relative bg-white w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col z-10">
+            <!-- CMS Header -->
+            <div class="p-6 bg-brand-800 text-white flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-sliders text-rose-300 text-xl"></i>
+                    <div>
+                        <h3 class="font-playfair font-bold text-xl">Panel de Control / CMS</h3>
+                        <p class="text-xs text-rose-200">Personaliza colores, teléfono y catálogo en vivo</p>
+                    </div>
+                </div>
+                <button onclick="toggleCMSModal()" class="text-rose-200 hover:text-white text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- CMS Body -->
+            <div class="p-6 overflow-y-auto space-y-8 flex-1">
+                
+                <!-- 1. Color Theme Selector -->
+                <div>
+                    <h4 class="font-bold text-brand-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-palette text-brand-500"></i> Tema de Color Principal
+                    </h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <button onclick="setTheme('cute')" class="p-3 rounded-2xl border-2 border-rose-300 bg-rose-50 text-xs font-bold text-rose-800 hover:shadow-md transition-all text-center">
+                            🌸 Rosado Cute
+                        </button>
+                        <button onclick="setTheme('botanical')" class="p-3 rounded-2xl border-2 border-emerald-300 bg-emerald-50 text-xs font-bold text-emerald-800 hover:shadow-md transition-all text-center">
+                            🌿 Verde Botánico
+                        </button>
+                        <button onclick="setTheme('lavender')" class="p-3 rounded-2xl border-2 border-purple-300 bg-purple-50 text-xs font-bold text-purple-800 hover:shadow-md transition-all text-center">
+                            🫐 Lavanda
+                        </button>
+                        <button onclick="setTheme('peach')" class="p-3 rounded-2xl border-2 border-orange-300 bg-orange-50 text-xs font-bold text-orange-800 hover:shadow-md transition-all text-center">
+                            🌇 Durazno
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 2. WhatsApp Number Configuration -->
+                <div>
+                    <h4 class="font-bold text-brand-800 mb-3 flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-500"></i> Configuración de WhatsApp
+                    </h4>
+                    <div class="flex gap-3">
+                        <input type="text" id="cmsPhone" placeholder="Ej: 51987654321" class="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 text-sm focus:ring-2 focus:ring-brand-500 outline-none">
+                        <button onclick="savePhone()" class="bg-brand-500 text-white font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-brand-600 transition-colors">Guardar</button>
+                    </div>
+                </div>
+
+                <!-- 3. Add New Product -->
+                <div>
+                    <h4 class="font-bold text-brand-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle text-brand-500"></i> Agregar Nuevo Producto
+                    </h4>
+                    <form onsubmit="addNewProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-rose-50/50 p-4 rounded-2xl border border-rose-100">
+                        <input type="text" id="prodTitle" placeholder="Nombre del Arreglo" required class="px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="number" step="0.5" id="prodPrice" placeholder="Precio (S/)" required class="px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="text" id="prodCategory" placeholder="Categoría (Ej: Ramos, Cajas)" required class="px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="url" id="prodImage" placeholder="URL de la Imagen (Unsplash)" class="px-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                        <div class="sm:col-span-2">
+                            <button type="submit" class="w-full bg-brand-800 hover:bg-black text-white font-bold py-3 rounded-xl text-sm transition-colors">Añadir al Catálogo</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 4. Manage Existing Products -->
+                <div>
+                    <h4 class="font-bold text-brand-800 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-500"></i> Inventario Actual
+                    </h4>
+                    <div id="cmsProductList" class="space-y-2">
+                        <!-- CMS products loaded here -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Initial Mock Products Data
+        const defaultProducts = [
+            {
+                id: 1,
+                title: "Ramo Ensueño Pastel",
+                category: "Ramos",
+                price: 120.00,
+                image: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 2,
+                title: "Caja Corazón Tulipanes & Rosas",
+                category: "Cajas Especiales",
+                price: 165.00,
+                image: "https://images.unsplash.com/photo-1526047932273-341f2a7631f9?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 3,
+                title: "Ramo Silvestre Aura",
+                category: "Ramos",
+                price: 95.00,
+                image: "https://images.unsplash.com/photo-1582794543139-8ac9cb0f7b11?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 4,
+                title: "Detalle Orquídea Premium",
+                category: "Plantas Cute",
+                price: 140.00,
+                image: "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        // Global State
+        let products = JSON.parse(localStorage.getItem('aura_products')) || defaultProducts;
+        let cart = JSON.parse(localStorage.getItem('aura_cart')) || [];
+        let whatsappNumber = localStorage.getItem('aura_phone') || "51987654321";
+        let activeCategory = "Todos";
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderCategoryFilters();
+            updateCart();
+            renderCMSList();
+            document.getElementById('cmsPhone').value = whatsappNumber;
+            
+            // Load theme
+            const savedTheme = localStorage.getItem('aura_theme') || 'cute';
+            setTheme(savedTheme);
+        });
+
+        // Theme Switcher
+        function setTheme(themeName) {
+            document.body.className = `theme-${themeName} antialiased min-h-screen flex flex-col justify-between`;
+            localStorage.setItem('aura_theme', themeName);
+        }
+
+        // Render Category Filter Buttons
+        function renderCategoryFilters() {
+            const categories = ["Todos", ...new Set(products.map(p => p.category))];
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = categories.map(cat => `
+                <button onclick="filterCategory('${cat}')" class="px-5 py-2 rounded-full font-semibold text-xs sm:text-sm transition-all ${
+                    activeCategory === cat 
+                    ? 'bg-brand-500 text-white shadow-md' 
+                    : 'bg-white text-brand-text hover:bg-rose-100/50 border border-rose-100'
+                }">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function filterCategory(cat) {
+            activeCategory = cat;
+            renderCategoryFilters();
+            renderProducts();
+        }
+
+        // Render Products Grid
+        function renderProducts() {
+            const grid = document.getElementById('productGrid');
+            const filtered = activeCategory === "Todos" 
+                ? products 
+                : products.filter(p => p.category === activeCategory);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-brand-text">No hay productos en esta categoría.</div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="bg-white rounded-[28px] overflow-hidden shadow-sm hover:shadow-xl transition-all border border-rose-100 flex flex-col justify-between group">
+                    <div>
+                        <!-- Image Frame -->
+                        <div class="relative overflow-hidden aspect-[4/3]">
+                            <img src="${p.image || 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80'}" 
+                                 alt="${p.title}" 
+                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-brand-500 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm">
+                                ${p.category}
+                            </span>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="p-5">
+                            <h3 class="font-playfair font-bold text-lg text-brand-800 line-clamp-1">${p.title}</h3>
+                            <p class="text-brand-500 font-extrabold text-xl mt-2">S/ ${parseFloat(p.price).toFixed(2)}</p>
+                        </div>
+                    </div>
+
+                    <!-- Add button -->
+                    <div class="px-5 pb-5">
+                        <button onclick="addToCart(${p.id})" class="w-full bg-rose-50 hover:bg-brand-500 text-brand-800 hover:text-white font-bold py-3 rounded-2xl transition-all flex items-center justify-center gap-2 group/btn">
+                            <i class="fa-solid fa-cart-plus text-brand-500 group-hover/btn:text-white transition-colors"></i>
+                            <span>Agregar al Carrito</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Cart Actions
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            saveCart();
+            toggleCartModal(true);
+        }
+
+        function updateCartQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            saveCart();
+        }
+
+        function saveCart() {
+            localStorage.setItem('aura_cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        function updateCart() {
+            // Update badge count
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+
+            // Render modal list
+            const cartList = document.getElementById('cartItemList');
+            if (cart.length === 0) {
+                cartList.innerHTML = `<div class="text-center py-12 text-brand-text">Tu carrito está vacío 💕</div>`;
+                document.getElementById('cartTotalAmount').textContent = "S/ 0.00";
+                return;
+            }
+
+            let total = 0;
+            cartList.innerHTML = cart.map(item => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                return `
+                    <div class="flex items-center gap-4 bg-rose-50/40 p-3 rounded-2xl border border-rose-100">
+                        <img src="${item.image}" class="w-16 h-16 rounded-xl object-cover">
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-brand-800 line-clamp-1">${item.title}</h4>
+                            <p class="text-brand-500 font-bold text-xs mt-0.5">S/ ${parseFloat(item.price).toFixed(2)}</p>
+                            <div class="flex items-center gap-3 mt-2">
+                                <button onclick="updateCartQuantity(${item.id}, -1)" class="w-6 h-6 rounded-full bg-white border border-rose-200 text-xs font-bold text-brand-800 flex items-center justify-center">-</button>
+                                <span class="text-xs font-bold">${item.quantity}</span>
+                                <button onclick="updateCartQuantity(${item.id}, 1)" class="w-6 h-6 rounded-full bg-white border border-rose-200 text-xs font-bold text-brand-800 flex items-center justify-center">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cartTotalAmount').textContent = `S/ ${total.toFixed(2)}`;
+        }
+
+        // WhatsApp Checkout
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return;
+
+            let message = "Hola *Aura Botánica*, me gustaría realizar el siguiente pedido 💕:\n\n";
+            let total = 0;
+
+            cart.forEach(item => {
+                const sub = item.price * item.quantity;
+                total += sub;
+                message += `• *${item.title}* x${item.quantity} - S/ ${sub.toFixed(2)}\n`;
+            });
+
+            message += `\n*Total a pagar: S/ ${total.toFixed(2)}*`;
+            message += "\n\n¿Me confirman la disponibilidad y datos de envío por favor?";
+
+            const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function openCustomOrderWhatsApp() {
+            const message = "Hola *Aura Botánica*, me gustaría solicitar un *Pedido Personalizado* 🌸.";
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // CMS Management
+        function savePhone() {
+            const val = document.getElementById('cmsPhone').value.trim();
+            if (val) {
+                whatsappNumber = val;
+                localStorage.setItem('aura_phone', val);
+                alert('¡Teléfono de WhatsApp guardado con éxito!');
+            }
+        }
+
+        function addNewProduct(e) {
+            e.preventDefault();
+            const title = document.getElementById('prodTitle').value;
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const category = document.getElementById('prodCategory').value;
+            const image = document.getElementById('prodImage').value || 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80';
+
+            const newProd = {
+                id: Date.now(),
+                title,
+                price,
+                category,
+                image
+            };
+
+            products.push(newProd);
+            saveProducts();
+            
+            // Reset form
+            e.target.reset();
+            renderCategoryFilters();
+            renderProducts();
+            renderCMSList();
+        }
+
+        function deleteProduct(id) {
+            products = products.filter(p => p.id !== id);
+            saveProducts();
+            renderCategoryFilters();
+            renderProducts();
+            renderCMSList();
+        }
+
+        function saveProducts() {
+            localStorage.setItem('aura_products', JSON.stringify(products));
+        }
+
+        function renderCMSList() {
+            const list = document.getElementById('cmsProductList');
+            list.innerHTML = products.map(p => `
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl border border-gray-200">
+                    <div class="flex items-center gap-3">
+                        <img src="${p.image}" class="w-10 h-10 rounded-lg object-cover">
+                        <div>
+                            <p class="font-bold text-xs text-gray-800">${p.title}</p>
+                            <p class="text-[10px] text-gray-500">${p.category} - S/ ${p.price}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteProduct(${p.id})" class="text-rose-500 hover:text-rose-700 p-2 text-xs font-bold">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Modal Toggles
+        function toggleCartModal(forceOpen = false) {
+            const modal = document.getElementById('cartModal');
+            if (forceOpen) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.toggle('hidden');
+            }
+        }
+
+        function toggleCMSModal() {
+            const modal = document.getElementById('cmsModal');
+            modal.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>
